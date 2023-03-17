@@ -1,9 +1,13 @@
 package com.jungang;
 
+
+import java.util.Scanner;
+
 public class OperatorEx {
 	public static void main(String[] args) {
-
+ 
 		int x, y;
+	
 		x = 5;
 		y = 2;
 		// 나머지 연산자 % - 두 수의 나눗셈 결과 나머지 값을 반환

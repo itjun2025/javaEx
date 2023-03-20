@@ -14,4 +14,16 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>단축키 메모장.txt</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/Desktop/%EB%8B%A8%EC%B6%95%ED%82%A4%20%EB%A9%94%EB%AA%A8%EC%9E%A5.txt</locationURI>
+		</link>
+		<link>
+			<name>용어정리.txt</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/Desktop/%EC%9A%A9%EC%96%B4%EC%A0%95%EB%A6%AC.txt</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

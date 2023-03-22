@@ -1,5 +1,7 @@
 package PmClass;
 
+import java.security.PublicKey;
+
 public class Calculator {
 
     // 메서드를 만드는 방법
@@ -13,8 +15,6 @@ public class Calculator {
 	// 접근제한자 반환타입 메서드명 (매개변수타입 변수명)      {                               }
 	    public   int    add   (int num1,int num2)   {
 		return num1 +num2;
-		
-		
 		
 	}
 	   

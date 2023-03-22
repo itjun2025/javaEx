@@ -1,10 +1,8 @@
 package PmClass;
 
-import java.util.DoubleSummaryStatistics;
+public class Calculator2 { 
 
-public class Calculator2 {
-
-	public int minus(int num1, int num2) {
+	public int minus(int num1, int num2) { 
 		return num1 - num2;
 	}
 

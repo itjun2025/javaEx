@@ -17,7 +17,7 @@ public class Bmi {
 				System.out.println(10+10);
 				System.out.println("당신의 BMI는" + bmi + " 입니다");
 				System.out.println(weight+height+ "당신의 BMI는" + bmi + "입니다");
-		
+				
 		
 			
 

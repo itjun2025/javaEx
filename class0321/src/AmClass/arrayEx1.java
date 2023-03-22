@@ -29,7 +29,7 @@ public class arrayEx1 {
 			sum+= score[i];
 //			System.out.println(score[i]);
 			
-			
+		
 		}
 		System.out.println("점수의 총 합계 : "+ sum);
 		System.out.println("평균 :"+ sum/score.length);

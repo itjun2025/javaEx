@@ -28,6 +28,7 @@ public class MemberMain3 {
 		
 		System.out.println("로그아웃을 하시려면 q를 입력해주세요");
 		String exit = scan.next();
+		System.out.println("로그아웃 되었습니다.");
 		
 		if ("q".equals(exit)) {
 			System.exit(0);

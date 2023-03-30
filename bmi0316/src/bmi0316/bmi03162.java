@@ -32,6 +32,7 @@ public class bmi03162 {
 			if ("q".equals(exit)) {
 				// 반복문 탈출
 				break;
+				
 			}
 
 		}

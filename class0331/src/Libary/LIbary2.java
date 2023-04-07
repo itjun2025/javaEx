@@ -19,6 +19,9 @@ public class LIbary2 {
 		this.booklist = booklist;
 	}
 	
+	// 메서드
+	
+	//  책 추가
 	public boolean addBook(String title, String author) {
 		// 외부로부터 받아온 매개변수를 활용하여 책을 생성
 		Book book = new Book(title, author);
@@ -26,11 +29,13 @@ public class LIbary2 {
 		return booklist.add(book);
 		
 	}
+	// 책 삭제
 	public void removeBook(int index) {
 		 Book book =  booklist.remove(index);
 		 System.out.println("삭제되었습니다." + book.toString());
 	}
 	
+	// 책 수정
 	public void update(int index) {
 		/*
 		 * 1. 인덱스에 들어있는 책을 꺼내오기

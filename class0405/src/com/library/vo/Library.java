@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.library.dao.Dao;
+import com.library.dao.DataBaseDao;
 import com.library.dao.FileDao;
 
 public class Library {
@@ -17,6 +18,15 @@ public class Library {
 	
 	// 생성자 특징 1. 클래스명과 같은이름 2. 반환타입이 없다
 	 public Library() {
+		 // 리스트 초기화
+		 list =	dao.getList();
+		 System.out.println(toString());
+	}
+	 public Library(String daoType) {
+		if (daoType.equals("DB")) {
+			dao = new DataBaseDao();
+		}
+		 
 		 // 리스트 초기화
 		 list =	dao.getList();
 		 System.out.println(toString());
@@ -113,8 +123,20 @@ public class Library {
 				if (!book.isRent()) {
 					// 렌트 상태로 변경
 					book.setRent(true);
+					
+					
+					
 					// 파일로 출력
 					Boolean res =  dao.listToFile(list);
+					// 데이터베이스 업데이트
+					int i = dao.update(no);
+					
+					if (i>0) {
+						System.out.println("처리되었습니다.");
+					}else {
+						System.out.println("처리도중 오류가 발생하였습니다.");
+						book.setRent(false);
+					}
 					if (!res) {
 						book.setRent(false);
 						System.err.println("파일로 출력하는데 실해했습니다.");
@@ -146,10 +168,12 @@ public class Library {
 						// 반납처리
 						book.setRent(false);
 						dao.listToFile(list);
+						// DB 업데이트 로직 호출
+						dao.update(no);
 						System.out.println("반납되었습니다");
 						return true;
 					}else {
-						System.out.println("반납가능한 도서가 아닙니다");
+						System.err.println("반납가능한 도서가 아닙니다");
 					}
 				}
 			}

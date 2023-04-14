@@ -1,5 +1,6 @@
 package connection;
 
+import java.security.PublicKey;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,27 +13,26 @@ public class BookDao {
 	
 	public static void main(String[] args) {
 		
+		
 		BookDao dao = new BookDao();
 //		dao.insert(15,"가시고기","김춘배","N");
 //		dao.delete(1);
 //		dao.update();
-		List<Book> list = dao.getList();
-		System.out.println("책리스트====================");
-		for(Book book : list) {
-			System.out.println(book.toString()); 
-		}
+//		List<Book> list = dao.getList();
+//		System.out.println("책리스트====================");
+//		for(Book book : list) {
+//			System.out.println(book.toString()); 
+//		}
 	}
-	
+//	
 //	}
 	
 	// 데이터 삽입
 	public  void insert(int no, String title, String author, String isRent) {
-//		Connection conn;
 	 try {
 		 
 		Connection conn =	DBUTil.getconnection();
 		Statement stmt = conn.createStatement();
-		System.out.println("ddd");
 		String sql = "insert into book values("+no+", '"+title+"', '"+author+"','"+isRent+"' ,sysdate,null)";
 		// 삽입,수정,삭제
 		int res = stmt.executeUpdate(sql);
@@ -47,8 +47,13 @@ public class BookDao {
 	 
 	 
 	 
+	 
 		
 	}
+	
+	
+	
+	
 	// 데이터 수정
 	public void update() {
 		

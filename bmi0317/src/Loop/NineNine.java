@@ -5,7 +5,7 @@ public class NineNine {
 	public static void main(String[] args) {
 		
 		int sum = 0;
-		for (int i = 1; i < 10; i++) {
+		for (int i = 1; i < 10; i+=2) {
 			System.out.println("========== "+ i +" 단========");
 		for (int n = 1; n < 10; n++) {
 				

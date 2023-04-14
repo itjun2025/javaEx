@@ -10,13 +10,14 @@ public class lotto {
 		int i = 0;
 		while(true) {
 			int num = (int)(Math.random() * 45 +1 );
-			
+		    boolean res = false;
+
 			System.out.print(num + " ");
 			
 			// 카운트
 			i++;
 			
-			if (i==5) {
+			if (i==6) {
 				break;
 			}
 			

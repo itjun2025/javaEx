@@ -1,97 +1,143 @@
 package com.library.dao;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
-import com.library.dao.conn.DBUtill;
-import com.library.vo.MemberVo;
+import com.library.common.ConnectionUtil;
+import com.library.vo.Member;
 
 public class MemberDao {
-		public MemberVo login(String id, String pw) {
-			
-			// 매개변수를 ?로 입력
-			String sql ="select * from member where id = ?  and pw = ?";
-			System.out.println("id "+ id);
-			System.out.println("pw "+ pw);
-			try(Connection conn = DBUtill.getConnection();
-					PreparedStatement  pstmt = conn.prepareStatement(sql);
-					) 
-			{
-				
-				pstmt.setString(1, id);
-				pstmt.setString(2, pw);
-				
-				ResultSet rs = pstmt.executeQuery();
-				if (rs.next()) {
-					String name = rs.getString("name");
-					String adminYN = rs.getString("adminYN");
-					
-					MemberVo memberVo = new MemberVo(id, "", name, adminYN);
-					return memberVo;
-				}
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			// id, pw가 일치하는 사용자를 찾을 수 없음
-			return null;
-			
-			
-		}
-
-		public int insertMember(MemberVo memberVo) {
-			String sql = "insert into member values(?,?,?,?)";
-			 try(Connection conn = DBUtill.getConnection();
-					 PreparedStatement pstmt =  conn.prepareStatement(sql);) {
-				 
-				 pstmt.setString(1, memberVo.getId());
-				 pstmt.setString(2, memberVo.getPw());
-				 pstmt.setString(3, memberVo.getName());
-				 pstmt.setString(4, memberVo.getAdminYN());
-				 
-				 int res = pstmt.executeUpdate();
-				 return res;
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-			}
-			return 0;
-		}
-
-		/**
-		 *  데이터  베이스에 등록된 사용자 정보를 삭제합니다.
-		 *  Statement
-		 *  	- 쿼리 자체를 String  문자열로 넣어주기 때문에
-		 *  		문자가 값으로 들어가는 경우 '' 처리를 해줘야 합니다
-		 *  
-		 *  Preparedstatement
-		 *  	-  Statement 클래스보다 기능이 향상
-		 *  	- 코드이 안정성과 가독성이 높다
-		 *  	- 인자 값으로 전달이 가능
-		 *  	- 매개변수를 ? 로 설정 (?에 ''처리를 하지 않습니다.)
-		 *  		setString(index,값);
-		 *  		setInt(index,값);
-		 * @return
-		 */
-		public int deletemember(String id) {
-			String sql = "delete from MEMBER where id=?";
-			System.out.println("=========");
-			
-			
-			try (Connection conn = DBUtill.getConnection();
-				PreparedStatement pstm = conn.prepareStatement(sql);){
-				
-				pstm.setString(1, id);
-				int res = pstm.executeUpdate();
-				return res;
-			} catch (SQLException e) {
-				System.out.println(e.getMessage());
-				e.printStackTrace();
-			}
-			return 0;
-		}
-
+	/**
+	 * 사용자 로그인
+	 * @param id
+	 * @param pw
+	 * @return
+	 */
+	public Member login(String id, String pw) {
+		Member member = null;
 		
+		String sql = 
+				String.format("select id, name, adminyn, status, grade from member "
+				+ "where id='%s' and pw='%s'",id,pw);
+		
+		// 쿼리 출력
+		System.out.println(sql);
+		
+		try (Connection conn = ConnectionUtil.getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);){
+			// 질의결과 결과집합을 member객체에 담아줍니다
+			if(rs.next()) {
+				String name = rs.getString(2);
+				String adminYN = rs.getString(3);
+				String status = rs.getString(4);
+				String grade = rs.getString(5);
+				
+				member = new Member(id, "", name, adminYN, status, grade);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return member;
+	}
+	
+	public int insert(Member member) {
+		int res = 0;
+		String sql = String.format(
+				"INSERT INTO MEMBER (id, pw, name)  VALUES "
+				+ "('%s','%s','%s')"
+				, member.getId(), member.getPw(), member.getName());
+		
+		System.out.println(sql);
+		try (Connection conn = ConnectionUtil.getConnection();
+				Statement stmt = conn.createStatement();){
+			res = stmt.executeUpdate(sql);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return res;
+		
+	}
+	
+	/**
+	 * 아이디 중복 체크
+	 * 중복일경우 false리턴
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public boolean idCheck(String id) {
+		boolean res = false;
+		
+		String sql = String.format(
+				"select * from member where id = '%s'",id);
+		System.out.println(sql);
+		try (Connection conn = ConnectionUtil.getConnection();
+				Statement stmt = conn.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);){
+			
+			// rs.next = 결과집합이 있으면 true -> !rs.next를 반환
+			return !rs.next();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+		return res;
+	}
+	
+	public int delete(String id) {
+		int res = 0;
+		
+		String sql = String.format
+				("delete from member where id = '%s'",id);
+		
+		System.out.println(sql);
+		
+		try (Connection conn = ConnectionUtil.getConnection();
+				Statement stmt = conn.createStatement();){
+			
+			res = stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -15,6 +15,7 @@ public class Book {
 		this.isRent = isRent;
 	}
 	
+  
 	
 	@Override
 	public String toString() {

@@ -87,7 +87,6 @@ public class BookDao {
 			Connection conn = DBUTil.getconnection();
 			Statement stmt = conn.createStatement();
 			int res =  stmt.executeUpdate("delete from book where no =" + no);
-			System.out.println(res + "건 삭제되었습니다.");
 			
 			DBUTil.closeConnection(conn, stmt);
 		} catch (SQLException e) {
